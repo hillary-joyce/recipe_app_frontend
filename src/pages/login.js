@@ -1,4 +1,6 @@
 import React from "react"
+import {connect} from "react-redux"
+import {setCurrentUser} from '../redux/action'
 
 class LoginPage extends React.Component {
   state = {
@@ -31,6 +33,7 @@ class LoginPage extends React.Component {
         alert("incorrect username or password")
       }else{
         localStorage.setItem('token', data.jwt)
+        this.props.setCurrentUser(data)
       }
     })
   }
@@ -47,4 +50,7 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage
+
+
+
+export default connect(null, {setCurrentUser})(LoginPage)
