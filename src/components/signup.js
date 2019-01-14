@@ -1,12 +1,15 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {creatingNewUser} from "../redux/action"
 
-export default class SignUp extends React.Component {
+class SignUp extends React.Component {
   constructor(){
     super()
     this.state = {
       username: "",
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      errorMessage: ""
     }
   }
 
@@ -26,19 +29,16 @@ export default class SignUp extends React.Component {
     }
 
     if(this.state.password === this.state.confirmPassword){
-      fetch('http://localhost:3000/api/v1/users', {
-        method: "POST",
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
-      }).then(r => r.json())
-      .then(d=>console.log(d))
+      this.props.creatingNewUser(data)
+    } else {
+      this.setState({errorMessage: "Passwords Don't Match"})
     }
-
   }
 
   render(){
     return(
       <form onSubmit={this.handleSignUp}>
+        <div className="error-messages">{this.state.errorMessage}</div>
         <input type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
         <input type="password" name="password" value={this.state.password} onChange={this.handleChange}/>
         <input type="password" name="confirmPassword" value={this.state.confirmPassword} onChange={this.handleChange}/>
@@ -47,3 +47,5 @@ export default class SignUp extends React.Component {
     )
   }
 }
+
+export default connect(null, {creatingNewUser})(SignUp)

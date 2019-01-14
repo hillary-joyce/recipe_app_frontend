@@ -1,24 +1,64 @@
 import {combineReducers} from 'redux'
-import {setCurrentUser} from './action'
 
 
 const SET_CURRENT_USER = "SET_CURRENT_USER"
 const REMOVE_CURRENT_USER = "REMOVE_CURRENT_USER"
+const CREATING_USER = "CREATING_USER"
+const CREATED_USER = "CREATED_USER"
+const LOADING_RECIPES = "LOADING_RECIPES"
+const FETCHED_RECIPES = "FETCHED_RECIPES"
 
-const userReducer = (user = null, action) => {
+// User-related reducers (sign in, sign up)
+const userReducer = (state = null, action) => {
   switch (action.type) {
     case SET_CURRENT_USER:
       return action.user
     case REMOVE_CURRENT_USER:
       return null
     default:
-      return user
+      return state
+  }
+}
+
+const creatingUserReducer = (state = false, action) => {
+  switch (action.type) {
+    case CREATING_USER:
+      return true
+    case SET_CURRENT_USER:
+      return false
+    default:
+      return state
+  }
+}
+
+// Recipe reducers ()
+const loadingRecipeReducer = (state = false, action) => {
+  switch (action.type) {
+    case LOADING_RECIPES:
+      return true
+    case FETCHED_RECIPES:
+      return false
+    default:
+      return state
   }
 }
 
 
-const reducer = combineReducers({
-  user: userReducer
+const recipesReducer = (state = [], action) => {
+  switch (action.type) {
+    case FETCHED_RECIPES:
+      return action.recipes
+    default:
+      return state
+  }
+}
+
+
+const rootReducer = combineReducers({
+  user: userReducer,
+  creatingNewUser: creatingUserReducer,
+  loadingRecipes: loadingRecipeReducer,
+  recipes: recipesReducer
 })
 
-export default reducer
+export default rootReducer
