@@ -1,0 +1,28 @@
+.sign-up-form {
+  width: 60%;
+  padding: 10px;
+  background: $jellybean-red;
+
+}
+
+.sign-up-form input {
+  background: none;
+  border: none;
+  border-bottom: 2px solid $white-smoke;
+  display: block;
+  margin: 20px;
+  padding: 0;
+  width: 80%;
+  font-size: 18px;
+
+}
+
+.sign-up-form input::placeholder {
+  color: $white-smoke;
+}
+
+.sign-up-form .form-submit {
+  border: 2px solid $white-smoke;
+  color: $white-smoke;
+  text-transform: uppercase;
+}

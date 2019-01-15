@@ -1,5 +1,4 @@
 import React from "react"
-import {connect} from "react-redux"
 
 class SearchBar extends React.Component {
   constructor(){
@@ -17,7 +16,7 @@ class SearchBar extends React.Component {
 
   render(){
     return(
-      <input type="text" placeholder="search" value={this.state.currentSearch} name="search" onChange={this.handleChange}/>
+      <input type="text" className="search-bar" placeholder="Search for Recipes..." value={this.state.currentSearch} name="search" onChange={this.handleChange}/>
     )
   }
 }

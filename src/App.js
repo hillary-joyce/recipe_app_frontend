@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import {fetchingRecipes} from './redux/action'
 import {connect} from "react-redux"
 
@@ -13,6 +13,7 @@ import AddRecipe from './pages/recipeForm'
 import RecipeSearch from './pages/recipeSearch'
 import HomePage from './pages'
 
+import "./App.scss"
 
 
 class App extends Component {
@@ -23,6 +24,7 @@ class App extends Component {
 
   render() {
     return (
+      <Router>
       <div className="App">
         <NavBar/>
           <Switch>
@@ -32,7 +34,8 @@ class App extends Component {
             <Route path="/recipe/new" component={AddRecipe}/>
             <Route path="/recipe/show/:id" component={ShowRecipe}/>
           </Switch>
-      </div>
+        </div>
+      </Router>
     );
   }
 }
