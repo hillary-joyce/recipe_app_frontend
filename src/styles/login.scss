@@ -10,17 +10,42 @@
 }
 
 .login-modal-content {
-  width: 400px;
+  width: 500px;
   height: 300px;
-  background: $isabelline;
+  background: $jellybean-red;
 }
 
 .close-modal {
-  color: $jellybean-red;
-  font-weight: 800;
+  color: $isabelline;
+  font-weight: 200;
   font-size: 20px;
+  margin: 10px;
+  margin-left: 400px;
 }
 
 .close-modal:hover {
   color: $mustard;
+  cursor: pointer;
+}
+
+.login-form input {
+  display: block;
+  width: 80%;
+  margin: 10px auto;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.login-form label {
+  color: white;
+  margin-left: 10%;
+}
+
+.login-form .login-submit-btn {
+  width: 100px;
+  background-color: $grey-green;
+  color: $isabelline;
+  font-size: 20px;
+  margin: 15px auto;
 }

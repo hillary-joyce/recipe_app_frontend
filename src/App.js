@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import {fetchingRecipes} from './redux/action'
 import {connect} from "react-redux"
 
-import LoginPage from "./pages/login"
 import Profile from './pages/profile'
 import ShowRecipe from './pages/recipe'
 import AddRecipe from './pages/recipeForm'

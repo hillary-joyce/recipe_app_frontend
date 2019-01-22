@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {signingInUser} from '../redux/action'
+import {withRouter} from 'react-router-dom'
 
 class Login extends React.Component {
   state = {
@@ -16,7 +17,11 @@ class Login extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.props.signingInUser(this.state)
+    if(this.state.username !== "" && this.state.password !== ""){
+      this.props.signingInUser(this.state)
+    } else {
+      console.log("please enter a username and password")
+    }
   }
   render(){
     return(
@@ -25,10 +30,10 @@ class Login extends React.Component {
         <input type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
         <label htmlFor="password">Password: </label>
         <input type="password" name="password" value={this.state.password} onChange={this.handleChange}/>
-        <input type="submit" value="Login"/>
+        <input type="submit" value="LOGIN" className="login-submit-btn"/>
       </form>
     )
   }
 }
 
-export default connect(null, {signingInUser})(Login)
+export default withRouter(connect(null, {signingInUser})(Login))

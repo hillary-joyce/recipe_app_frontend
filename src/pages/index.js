@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import SearchBar from "../components/searchBar"
 import SignUp from "../components/signup"
 import Login from "../components/login"
 
@@ -29,10 +28,14 @@ class IndexPage extends React.Component {
           </div>
         : null
         }
+        {this.props.user ?
+          <Redirect to="/profile"/>
+        :
         <div className="index-page">
           <div className="ingredients-bg" style={{backgroundImage: `url(${spices})`, backgroundSize: 'cover'}}></div>
           <div className="index-content">
-            <div className="login" onClick={this.showModal}>LOGIN</div>
+            {this.props.user ? <div className="login"><Link to='/profile'>Welcome Back {this.props.user.username}!</Link></div>
+              : <div className="login" onClick={this.showModal}>LOGIN</div>}
             <h1 className="index-header">My Recipe Box</h1>
             <p className="header-paragraph">Organize your recipes</p>
             <p className="header-paragraph">Discover something new</p>
@@ -43,10 +46,13 @@ class IndexPage extends React.Component {
             <p className="have-an-acct">Already have an account? <span className="login-span" onClick={this.showModal}>Login</span></p>
           </div>
         </div>
+        }
       </React.Fragment>
     )
   }
 
 }
-
-export default IndexPage
+const mapStateToProps = (state) => {
+  return ({user: state.user})
+}
+export default connect(mapStateToProps)(IndexPage)

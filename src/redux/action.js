@@ -40,11 +40,13 @@ const signingInUser = (userObj) => {
     })
     .then(r => r.json())
     .then(data => {
-      if(data.error){
+      console.log(data)
+      if(data.message){
         alert("incorrect username or password")
       } else {
         localStorage.setItem('token', data.jwt)
         dispatch(setCurrentUser(data.user))
+        return "true"
       }
     })
   }

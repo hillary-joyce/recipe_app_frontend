@@ -1,11 +1,11 @@
 import React from "react"
+import {connect} from "react-redux"
 
-class SearchBar extends React.Component {
-  constructor(){
-    super()
-    this.state = {
-      search: ""
-    }
+
+class RecipeSearchForm extends React.Component {
+  state = {
+    searchTerm: "",
+    recipeType: "All"
   }
 
   handleChange = (e) => {
@@ -16,9 +16,12 @@ class SearchBar extends React.Component {
 
   render(){
     return(
-      <input type="text" className="search-bar" placeholder="Search for Recipes..." value={this.state.currentSearch} name="search" onChange={this.handleChange}/>
+      <input type="text" className="search-bar" placeholder="Search for Recipes..." value={this.state.currentSearch} name="searchTerm" onChange={this.handleChange}/>
+      <select>
+        <option value="user">My Recipes</option>
+      </select>
     )
   }
 }
 
-export default SearchBar
+export default RecipeSearchForm

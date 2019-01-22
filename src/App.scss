@@ -5,6 +5,7 @@
 @import "./styles/recipeCard.scss";
 @import "./styles/signupform.scss";
 @import './styles/login.scss';
+@import './styles/profile.scss';
 
 body, html {
   margin: 0;
@@ -88,4 +89,13 @@ body, html {
 
 .login-span:hover {
   cursor: pointer;
+}
+
+.login a {
+  text-decoration: none;
+  color: $isabelline;
+}
+
+.login a:hover {
+  color: $mustard;
 }
