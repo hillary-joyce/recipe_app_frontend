@@ -1,0 +1,26 @@
+.login-modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-modal-content {
+  width: 400px;
+  height: 300px;
+  background: $isabelline;
+}
+
+.close-modal {
+  color: $jellybean-red;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.close-modal:hover {
+  color: $mustard;
+}

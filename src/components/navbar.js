@@ -4,10 +4,10 @@ import {Link} from 'react-router-dom'
 export const NavBar = () => (
   <div className="navbar">
     <div className="navbar-links">
-      <Link to='/'> Home </Link>
-      <Link to='/profile'> My Profile </Link>
-      <Link to='/recipes'> Find Recipes </Link>
-      <Link to='/recipe/new'> Add a Recipe </Link>
+      <Link to='/'> HOME </Link>
+      <Link to='/profile'> PROFILE </Link>
+      <Link to='/recipes'> FIND RECIPES </Link>
+      <Link to='/recipe/new'> NEW RECIPE </Link>
     </div>
     <div className="navbar-icon">
     </div>

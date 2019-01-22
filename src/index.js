@@ -8,6 +8,14 @@ import store from './redux/store'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import WebFont from 'webfontloader';
+
+WebFont.load({
+  google: {
+    families: ['Playfair Display:400,900', 'Montserrat:200,800', 'sans-serif']
+  }
+});
+
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>

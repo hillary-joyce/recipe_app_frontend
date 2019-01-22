@@ -1,28 +1,52 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import SearchBar from "../components/searchBar"
 import SignUp from "../components/signup"
-import RecipeCard from "../components/recipeCard"
+import Login from "../components/login"
 
+import spices from "../images/spices.jpg"
 
+class IndexPage extends React.Component {
+  state = {
+    loginModal: false
+  }
 
-const IndexPage = (props) => (
-  <React.Fragment>
-    <div className="header">My Recipe Box</div>
-    <div className="container">
-      <SearchBar />
-      <h3>Popular Recipes</h3>
-      <div className="recipe-container">
-        {props.recipes !== [] ? props.recipes.map(r => <RecipeCard key={r.id} recipe={r}/>) : null}
-      </div>
-      <p>Want to start sharing recipes? Create an account:</p>
-      <SignUp />
-    </div>
-  </React.Fragment>
-)
+  showModal = () => {
+    this.setState({loginModal: !this.state.loginModal})
+  }
 
-const mapStateToProps = (state) => {
-  return {recipes: state.recipes}
+  render(){
+    return(
+      <React.Fragment>
+        {this.state.loginModal ?
+          <div className="login-modal">
+            <div className="login-modal-content">
+              <div className="close-modal" onClick={this.showModal}>Close X</div>
+              <Login />
+            </div>
+          </div>
+        : null
+        }
+        <div className="index-page">
+          <div className="ingredients-bg" style={{backgroundImage: `url(${spices})`, backgroundSize: 'cover'}}></div>
+          <div className="index-content">
+            <div className="login" onClick={this.showModal}>LOGIN</div>
+            <h1 className="index-header">My Recipe Box</h1>
+            <p className="header-paragraph">Organize your recipes</p>
+            <p className="header-paragraph">Discover something new</p>
+            <p className="header-paragraph">Share your family traditions</p>
+            <Link className="index-link" to="/recipes">Browse our Recipes</Link>
+            <p className="sign-up-header">Sign up now to start sharing your recipes</p>
+            <SignUp />
+            <p className="have-an-acct">Already have an account? <span className="login-span" onClick={this.showModal}>Login</span></p>
+          </div>
+        </div>
+      </React.Fragment>
+    )
+  }
+
 }
-export default connect(mapStateToProps)(IndexPage)
+
+export default IndexPage

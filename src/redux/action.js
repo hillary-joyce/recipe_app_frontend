@@ -27,6 +27,29 @@ const creatingNewUser = (userObj) => {
   }
 }
 
+const signingInUser = (userObj) => {
+  return (dispatch) => {
+    dispatch(loadingUser())
+    fetch('http://localhost:3000/api/v1/login',{
+      method:"POST",
+      headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(userObj)
+    })
+    .then(r => r.json())
+    .then(data => {
+      if(data.error){
+        alert("incorrect username or password")
+      } else {
+        localStorage.setItem('token', data.jwt)
+        dispatch(setCurrentUser(data.user))
+      }
+    })
+  }
+}
+
 // Recipe Actions
 const loadingRecipes = () => ({type: LOADING_RECIPES})
 
@@ -47,4 +70,4 @@ const fetchingRecipes = () => {
 
 
 
-export {setCurrentUser, fetchingRecipes, creatingNewUser}
+export {setCurrentUser, fetchingRecipes, creatingNewUser, signingInUser}

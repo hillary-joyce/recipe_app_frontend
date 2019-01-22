@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {creatingNewUser} from "../redux/action"
+import {withRouter} from "react-router-dom"
 
 class SignUp extends React.Component {
   constructor(){
@@ -27,25 +28,23 @@ class SignUp extends React.Component {
         password: this.state.password
       }
     }
-
-    if(this.state.password === this.state.confirmPassword){
-      this.props.creatingNewUser(data)
-    } else {
-      this.setState({errorMessage: "Passwords Don't Match"})
-    }
+    this.props.creatingNewUser(data)
   }
 
   render(){
     return(
       <form className="sign-up-form" onSubmit={this.handleSignUp}>
         <div className="error-messages">{this.state.errorMessage}</div>
-        <input type="text" placeholder="username" name="username" value={this.state.username} onChange={this.handleChange}/>
-        <input type="password" placeholder="password" name="password" value={this.state.password} onChange={this.handleChange}/>
-        <input type="password" placeholder="confirm password" name="confirmPassword" value={this.state.confirmPassword} onChange={this.handleChange}/>
-        <input className="form-submit" type="submit"/>
+        <label htmlFor="username">Create a Username</label>
+        <input type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
+        <label htmlFor="password">Choose a Password</label>
+        <input type="password" name="password" value={this.state.password} onChange={this.handleChange}/>
+        <label htmlFor="confirmPassword">Confirm Password</label>
+        <input type="password" name="confirmPassword" value={this.state.confirmPassword} onChange={this.handleChange}/>
+        <input className="form-submit" type="submit" value="JOIN"/>
       </form>
     )
   }
 }
 
-export default connect(null, {creatingNewUser})(SignUp)
+export default withRouter(connect(null, {creatingNewUser})(SignUp))

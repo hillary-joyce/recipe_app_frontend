@@ -1,28 +1,30 @@
 .sign-up-form {
-  width: 60%;
-  padding: 10px;
-  background: $jellybean-red;
+  width: 400px;
+  margin: 20px auto;
+  text-align: left;
+}
 
+.error-messages {
+  color: $isabelline;
+}
+
+.sign-up-form input, .sign-up-form label{
+    display: block;
 }
 
 .sign-up-form input {
-  background: none;
-  border: none;
-  border-bottom: 2px solid $white-smoke;
-  display: block;
-  margin: 20px;
-  padding: 0;
-  width: 80%;
+  margin: 5px auto;
+  width: 100%;
+  padding: 2px;
+  border-radius: 5px;
   font-size: 18px;
-
-}
-
-.sign-up-form input::placeholder {
-  color: $white-smoke;
 }
 
 .sign-up-form .form-submit {
-  border: 2px solid $white-smoke;
-  color: $white-smoke;
-  text-transform: uppercase;
+  margin-top: 20px;
+  width: 200px;
+  background-color: $grey-green;
+  color: $isabelline;
+  font-size: 20px;
+  margin: 15px auto;
 }
