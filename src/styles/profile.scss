@@ -8,12 +8,38 @@
 }
 
 .search-form {
-  margin-top: 100px;
+  margin: 100px auto;
 }
 
+.search-form input {
+  width: 85%;
+  margin-left: 5px;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 20px;
+}
+
+.search-form label {
+  margin-left: 10px;
+  color: $isabelline;
+  font-size: 22px;
+}
 .recipe-results {
   padding-top: 100px;
 }
 .recipe-results h2 {
   margin-left: 300px;
+}
+
+.categories-list {
+  margin-left: 10px;
+  font-weight: 800;
+  color: $isabelline;
+  font-size: 22px;
+  text-transform: uppercase;
+}
+
+.categories-list:hover {
+  color: $mustard;
 }

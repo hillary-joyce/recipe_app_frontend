@@ -7,7 +7,8 @@ import RecipeCard from '../components/recipeCard'
 class ProfilePage extends React.Component{
   state = {
     searchTerm: '',
-    recipeType: 'all'
+    recipeType: 'all',
+    category: null
   }
 
   handleChange = (e) => {
@@ -16,20 +17,44 @@ class ProfilePage extends React.Component{
     })
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault()
-    this.searchRecipes()
-  }
-
   searchRecipes = () => {
-    return(this.state.searchTerm === '' ? this.props.user.recipes :
-    this.props.user.recipes.filter(r => r.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())))
+    let searchRecipes = this.state.searchTerm === '' ? this.props.user.recipes :
+    this.props.user.recipes.filter(r => r.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
+    let categoryRecipes = []
+    if(this.state.category){
+      searchRecipes.forEach(r => {
+        r.categories.forEach(cat => {
+          if(cat.name === this.state.category){
+            categoryRecipes.push(r)
+          }
+        })
+      })
+      return(categoryRecipes)
+    } else {
+      return(this.props.user.recipes)
+    }
   }
 
   searchFavorites = () => {
     console.log(this.props.user.favorites);
     return(this.state.searchTerm === '' ? this.props.user.favorites :
     this.props.user.favorites.filter(r => r.recipe.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())))
+  }
+
+  getCategories = () => {
+    let categories = []
+    this.props.user.recipes.forEach(r => {
+      r.categories.forEach(cat => {
+        if(categories.indexOf(cat.name) === -1){
+          categories.push(cat.name)
+        }
+      })
+    })
+    return categories
+  }
+
+  searchCategoriesRecipes = (e) => {
+    this.setState({category: e.target.innerText.toLowerCase()})
   }
 
   render(){
@@ -40,16 +65,15 @@ class ProfilePage extends React.Component{
         {this.props.user ?
           <React.Fragment>
             <div className="search-sidebar">
-              <form className="search-form" onSubmit={this.handleSubmit}>
+              <form className="search-form">
                 <label htmlFor="searchTerm">Search for a recipe:</label>
                 <input type="text" name="searchTerm" value={this.state.searchTerm} onChange={this.handleChange}/>
-                <select onChange={this.handleChange} name="recipeType">
-                  <option value="all">All</option>
-                  <option value="my-recipes">My Recipes</option>
-                  <option value="my-favs">My Favorites</option>
-                </select>
-                <input type="submit" value="find recipes"/>
               </form>
+              <h2>Categories</h2>
+              {this.props.user.recipes ? this.getCategories().map(r => (
+                <p className="categories-list" onClick={this.searchCategoriesRecipes}>{r}</p>
+              )) :
+              null}
             </div>
             <div className="recipe-results">
               <h2>My Recipes:</h2>
