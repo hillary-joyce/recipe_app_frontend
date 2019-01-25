@@ -8,7 +8,7 @@ class ProfilePage extends React.Component{
   state = {
     searchTerm: '',
     recipeType: 'all',
-    category: null
+    category: 'all'
   }
 
   handleChange = (e) => {
@@ -21,7 +21,7 @@ class ProfilePage extends React.Component{
     let searchRecipes = this.state.searchTerm === '' ? this.props.user.recipes :
     this.props.user.recipes.filter(r => r.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
     let categoryRecipes = []
-    if(this.state.category){
+    if(this.state.category !== 'all'){
       searchRecipes.forEach(r => {
         r.categories.forEach(cat => {
           if(cat.name === this.state.category){
@@ -36,9 +36,10 @@ class ProfilePage extends React.Component{
   }
 
   searchFavorites = () => {
-    console.log(this.props.user.favorites);
-    return(this.state.searchTerm === '' ? this.props.user.favorites :
-    this.props.user.favorites.filter(r => r.recipe.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())))
+    let favRecipes = this.state.searchTerm === '' ? this.props.user.favorites :
+    this.props.user.favorites.filter(r => r.recipe.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
+    let categoryRecipes =[]
+    return favRecipes
   }
 
   getCategories = () => {
@@ -74,6 +75,7 @@ class ProfilePage extends React.Component{
                 <p className="categories-list" onClick={this.searchCategoriesRecipes}>{r}</p>
               )) :
               null}
+                <p className="categories-list" onClick={this.searchCategoriesRecipes}>all</p>
             </div>
             <div className="recipe-results">
               <h2>My Recipes:</h2>

@@ -6,7 +6,7 @@ import {connect} from "react-redux"
 import Profile from './pages/profile'
 import ShowRecipe from './pages/recipe'
 import AddRecipe from './pages/recipeForm'
-import RecipeSearch from './pages/recipeSearch'
+import RecipeSearch from './pages/recipe'
 import HomePage from './pages'
 
 import "./App.scss"

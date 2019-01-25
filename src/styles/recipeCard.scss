@@ -1,14 +1,14 @@
 .recipe-container {
   margin-left: 300px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 215px);
   grid-gap: 10px;
   padding: 30px;
 }
 
 .recipe-card {
-  width: 220px;
-  height: 220px;
+  width: 175px;
+  height: 175px;
   border: 10px solid $grey-green;
   padding: 10px;
 }
@@ -17,13 +17,13 @@
   text-transform: uppercase;
   font-weight: 800;
   color: $grey-green;
-  font-size: 26px;
+  font-size: 22px;
 }
 
 .recipe-details {
   color: $grey-green;
   font-weight: 800;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .recipe-card:hover {
