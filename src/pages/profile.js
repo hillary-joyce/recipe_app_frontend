@@ -8,13 +8,29 @@ class ProfilePage extends React.Component{
   state = {
     searchTerm: '',
     recipeType: 'all',
-    category: 'all'
+    category: 'all',
+    favorites: []
   }
 
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     })
+  }
+
+  getFavorites = () => {
+    fetch(`http://localhost:3000/api/v1/favorites/${this.props.user.id}`)
+    .then(r => r.json())
+    .then(d => {
+      let recipes = d.map(fave => fave.recipe)
+      this.setState({favorites: recipes})
+    })
+  }
+
+  componentDidMount(){
+    if(this.props.user){
+      this.getFavorites()
+    }
   }
 
   searchRecipes = () => {
@@ -31,20 +47,37 @@ class ProfilePage extends React.Component{
       })
       return(categoryRecipes)
     } else {
-      return(this.props.user.recipes)
+      return(searchRecipes)
     }
   }
 
   searchFavorites = () => {
-    let favRecipes = this.state.searchTerm === '' ? this.props.user.favorites :
-    this.props.user.favorites.filter(r => r.recipe.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
-    let categoryRecipes =[]
+    let favRecipes = this.state.searchTerm === '' ? this.state.favorites :
+    this.state.favorites.filter(r => r.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
+    let categoryFavRecipes =[]
+    if(this.state.category !== 'all'){
+      favRecipes.forEach(r => {
+        r.categories.forEach(cat => {
+          if(cat.name === this.state.category){
+            categoryFavRecipes.push(r)
+          }
+        })
+      })
+      return(categoryFavRecipes)
+    }
     return favRecipes
   }
 
   getCategories = () => {
     let categories = []
     this.props.user.recipes.forEach(r => {
+      r.categories.forEach(cat => {
+        if(categories.indexOf(cat.name) === -1){
+          categories.push(cat.name)
+        }
+      })
+    })
+    this.state.favorites.forEach(r => {
       r.categories.forEach(cat => {
         if(categories.indexOf(cat.name) === -1){
           categories.push(cat.name)
@@ -59,7 +92,6 @@ class ProfilePage extends React.Component{
   }
 
   render(){
-    console.log(this.state.searchTerm)
     return(
       <React.Fragment>
         <NavBar />
@@ -72,7 +104,7 @@ class ProfilePage extends React.Component{
               </form>
               <h2>Categories</h2>
               {this.props.user.recipes ? this.getCategories().map(r => (
-                <p className="categories-list" onClick={this.searchCategoriesRecipes}>{r}</p>
+                <p key={r} className="categories-list" onClick={this.searchCategoriesRecipes}>{r}</p>
               )) :
               null}
                 <p className="categories-list" onClick={this.searchCategoriesRecipes}>all</p>
@@ -84,8 +116,8 @@ class ProfilePage extends React.Component{
               </div>
               <h2>My Favorites:</h2>
               <div className="recipe-container">
-                {this.props.user.favorites ? this.searchFavorites().map(r => <RecipeCard key={r.id} recipe={r.recipe}/>): <p> No Favorites Found :(</p>}
-              </div>
+              {this.props.user.favorites ? this.searchFavorites().map(r => <RecipeCard key={r.id} recipe={r}/>): <p> No Favorites Found :(</p>}
+            </div>
             </div>
           </React.Fragment>
           :
@@ -99,4 +131,5 @@ class ProfilePage extends React.Component{
 const mapStateToProps = (state) => {
   return({user: state.user})
 }
+
 export default connect(mapStateToProps)(ProfilePage)
