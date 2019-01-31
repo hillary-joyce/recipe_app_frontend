@@ -3,7 +3,6 @@ const LOADING_RECIPES = "LOADING_RECIPES"
 const FETCHED_RECIPES = "FETCHED_RECIPES"
 const LOADING_USER = "LOADING_USER"
 
-
 const RECIPE_URL = "http://localhost:3000/api/v1/recipes"
 const USER_URL = "http://localhost:3000/api/v1/users"
 
@@ -63,13 +62,24 @@ const fetchingRecipes = () => {
     fetch(RECIPE_URL)
     .then(res => res.json())
     .then(recipes => {
-      console.log(recipes)
       dispatch(fetchedRecipes(recipes))
+    })
+  }
+}
+
+// Current Recipe for show page
+const fetchedCurrentReipe = recipe => ({type: "FETCHED_CURRENT_RECIPE", recipe})
+
+const fetchingCurrentRecipe = (id) => {
+  return (dispatch) => {
+    fetch(`http://localhost:3000/api/v1/recipes/${id}`)
+    .then(r => r.json())
+    .then(recipe => {
+      dispatch(fetchedCurrentReipe(recipe))
     })
   }
 }
 
 
 
-
-export {setCurrentUser, fetchingRecipes, creatingNewUser, signingInUser}
+export {setCurrentUser, fetchingRecipes, creatingNewUser, signingInUser, fetchingCurrentRecipe}

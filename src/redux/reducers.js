@@ -7,6 +7,7 @@ const CREATING_USER = "CREATING_USER"
 const CREATED_USER = "CREATED_USER"
 const LOADING_RECIPES = "LOADING_RECIPES"
 const FETCHED_RECIPES = "FETCHED_RECIPES"
+const FETCHED_CURRENT_RECIPE = "FETCHED_CURRENT_RECIPE"
 
 // User-related reducers (sign in, sign up)
 const userReducer = (state = null, action) => {
@@ -53,12 +54,22 @@ const recipesReducer = (state = [], action) => {
   }
 }
 
+const currentRecipeReducer = (state = null, action) => {
+  switch (action.type) {
+    case FETCHED_CURRENT_RECIPE:
+      return action.recipe
+    default:
+      return state
+  }
+}
+
 
 const rootReducer = combineReducers({
   user: userReducer,
   creatingNewUser: creatingUserReducer,
   loadingRecipes: loadingRecipeReducer,
-  recipes: recipesReducer
+  recipes: recipesReducer,
+  currentRecipe: currentRecipeReducer
 })
 
 export default rootReducer

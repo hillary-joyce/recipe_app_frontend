@@ -1,91 +1,63 @@
-import React from "react"
-import {connect} from "react-redux"
+import React from 'react'
+import {withRouter} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {fetchingCurrentRecipe} from '../redux/action'
 
 import NavBar from '../components/navbar'
-import RecipeCard from '../components/recipeCard'
 
-class RecipePage extends React.Component{
-  state = {
-    searchTerm: '',
-    recipeType: 'all',
-    category: 'all'
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-
-  searchRecipes = () => {
-    let searchRecipes = this.state.searchTerm === '' ? this.props.recipes :
-    this.props.recipes.filter(r => r.name.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
-    console.log(searchRecipes)
-    let categoryRecipes = []
-    if(this.state.category !== 'all'){
-      searchRecipes.forEach(r => {
-        r.categories.forEach(cat => {
-          if(cat.name === this.state.category){
-            categoryRecipes.push(r)
-          }
-        })
-      })
-      return(categoryRecipes)
-    } else {
-      return(searchRecipes)
-    }
-  }
-
-  getCategories = () => {
-    let categories = []
-    this.props.recipes.forEach(r => {
-      r.categories.forEach(cat => {
-        if(categories.indexOf(cat.name) === -1){
-          categories.push(cat.name)
-        }
-      })
-    })
-    return categories
-  }
-
-  searchCategoriesRecipes = (e) => {
-    this.setState({category: e.target.innerText.toLowerCase()})
+class recipeShow extends React.Component {
+  componentDidMount(){
+    this.props.fetchingCurrentRecipe(this.props.match.params.id)
   }
 
   render(){
-    console.log(this.state.searchTerm)
+    console.log(this.props)
     return(
       <React.Fragment>
         <NavBar />
-        {this.props.recipes ?
+        {this.props.recipe ?
           <React.Fragment>
             <div className="search-sidebar">
-              <form className="search-form">
-                <label htmlFor="searchTerm">Search for a recipe:</label>
-                <input type="text" name="searchTerm" value={this.state.searchTerm} onChange={this.handleChange}/>
-              </form>
-              <h2>Categories</h2>
-              {this.props.recipes ? this.getCategories().map(r => (
-                <p className="categories-list" onClick={this.searchCategoriesRecipes}>{r}</p>
-              )) :
-              null}
-                <p className="categories-list" onClick={this.searchCategoriesRecipes}>all</p>
+              <div className="user-recipe-info">
+                <h2>Created By: {this.props.recipe.user.username}</h2>
+                <h2>Faves: {this.props.recipe.favorites.length}</h2>
+              </div>
+              <div className="recipe-details">
+                <h2>Cooking Time: {this.props.recipe.cooking_time}</h2>
+                <h2>Categories</h2>
+                {this.props.recipe.categories.map(cat => <span key={cat.id}>{cat.name}</span>)}
+              </div>
+              <div className="ingredients">
+                <h2>Ingredients:</h2>
+                {this.props.recipe.recipe_ingredients.map(ing => (
+                  <p key={ing.id}>{ing.amount} {ing.ingredient.name}</p>
+                ))}
+              </div>
             </div>
-            <div className="recipe-results">
-              <h2>Find Recipes:</h2>
-              <div className="recipe-container">
-                {this.props.recipes ? this.searchRecipes().map(r => <RecipeCard key={r.id} recipe={r}/>): null}
+            <div className="recipe-instructions">
+              <h1 className="recipe-title">{this.props.recipe.name}</h1>
+              <p className="recipe-description"></p>
+              <h2>Directions:</h2>
+              <div className="directions">
+                <ol>
+                  {this.props.recipe.directions.map(dir => (
+                    <li>{dir.text}</li>
+                  ))}
+                </ol>
               </div>
             </div>
           </React.Fragment>
-          : <p>Looking for Recipes...</p>
+          : <p>No recipe found :( </p>
         }
       </React.Fragment>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return({recipes: state.recipes})
+const mapStateToProps = state => {
+  return {
+    recipe: state.currentRecipe
+  }
 }
-export default connect(mapStateToProps)(RecipePage)
+
+export default withRouter(connect(mapStateToProps, {fetchingCurrentRecipe})(recipeShow))

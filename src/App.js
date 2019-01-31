@@ -6,7 +6,7 @@ import {connect} from "react-redux"
 import Profile from './pages/profile'
 import ShowRecipe from './pages/recipe'
 import AddRecipe from './pages/recipeForm'
-import RecipeSearch from './pages/recipe'
+import RecipeIndex from './pages/recipeIndex'
 import HomePage from './pages'
 
 import "./App.scss"
@@ -25,7 +25,7 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={HomePage}/>
             <Route path="/profile" component={Profile}/>
-            <Route path="/recipes" component={RecipeSearch}/>
+            <Route path="/recipes" component={RecipeIndex}/>
             <Route path="/recipe/new" component={AddRecipe}/>
             <Route path="/recipe/show/:id" component={ShowRecipe}/>
           </Switch>
